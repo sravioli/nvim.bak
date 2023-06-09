@@ -8,9 +8,8 @@ return {
         col = 0.10,
         width = 0.80,
         height = 0.60,
-        border = require("custom.assets.border"),
+        border = require "custom.assets.border",
       },
     },
   },
 }
-

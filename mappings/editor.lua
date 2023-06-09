@@ -35,4 +35,3 @@ return {
     ["<M-BS>"] = { "<C-u>", "Delete everything from cursor to left" },
   },
 }
-

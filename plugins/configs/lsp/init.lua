@@ -1,4 +1,4 @@
-local __border = require("custom.assets.border")
+local __border = require "custom.assets.border"
 
 -- custom on_attach() function with extra things
 local on_attach = function(client, bufnr)

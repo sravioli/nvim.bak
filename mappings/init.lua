@@ -1,4 +1,4 @@
 return {
-  disable = require("custom.mappings.disable"),
-  editor = require("custom.mappings.editor")
+  disable = require "custom.mappings.disable",
+  editor = require "custom.mappings.editor",
 }

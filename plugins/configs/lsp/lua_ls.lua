@@ -29,4 +29,3 @@ return {
 
   telemetry = { enable = false },
 }
-

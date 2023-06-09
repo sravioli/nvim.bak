@@ -28,7 +28,7 @@ M.ui = {
 M.plugins = "custom.plugins"
 
 M.lazy_nvim = {
-  ui = { border = require("custom.assets.border") },
+  ui = { border = require "custom.assets.border" },
   -- checker = { enabled = true },
 }
 
