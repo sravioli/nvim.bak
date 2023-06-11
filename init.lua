@@ -16,6 +16,7 @@ set.shiftwidth = 2
 set.expandtab = true
 set.termguicolors = true
 
+let.editorconfig = true
 let.code_action_menu_window_border = require "custom.assets.border"
 let.load_doxygen_syntax = 1
 let.doxygen_javadoc_autobrief = 0

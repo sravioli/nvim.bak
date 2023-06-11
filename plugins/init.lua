@@ -320,8 +320,4 @@ return {
     config = true,
     event = "BufAdd",
   },
-  {
-    -- EditorConfig plugin for Vim.
-    "editorconfig/editorconfig-vim",
-  },
 }
