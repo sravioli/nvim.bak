@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "enabled": true,
+  "language": "en",
+  "words": [],
+  "flagWords": [],
+  "ignoreWords": [],
+  "ignorePaths": [
+    "./.cspell.json",
+    "node_modules/**"
+  ],
+  "maxNumberOfProblems": 10,
+  "minWordLength": 4,
+  "allowCompoundWords": true,
+  "import": [
+    "@cspell/dict-it-it/cspell-ext.json",
+    "@cspell/dict-lua/cspell-ext.json"
+  ],
+  "dictionaries": [
+    "en_US",
+    "en-gb",
+    "companies",
+    "softwareTerms",
+    "misc"
+  ],
+  "dictionaryDefinitions": [],
+  "ignoreRegExpList": [],
+  "includeRegExpList": [],
+  "patterns": [],
+  "languageSettings": []
+}
