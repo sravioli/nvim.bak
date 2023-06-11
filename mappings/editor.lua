@@ -19,6 +19,7 @@ return {
 
   i = {
     ["jk"] = { "<Esc>", "Exit insert mode", opts = { nowait = true } },
+    ["<Bar>"] = { "<Bar><Esc>:lua align_md_table()<CR>a", "Align markdown table as you type" },
 
     -- same normal mappings for insert mode also
     ["<C-s>"] = { "<C-o><cmd>w<CR>", "Save file" },
