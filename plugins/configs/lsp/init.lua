@@ -56,9 +56,9 @@ local lspconfig = require "lspconfig"
 
 local servers = {
   "lua_ls",
-  -- "marksman",
-  -- "jsonls",
-  -- "taplo",
+  "marksman",
+  "jsonls",
+  "taplo",
   -- "yamlls",
   -- "clangd",
 }
@@ -73,10 +73,10 @@ for _, lsp in ipairs(servers) do
       Lua = require "custom.plugins.configs.lsp.lua_ls",
     },
 
-    -- marksman = require "custom.plugs.config.lsp.marksman",
-    -- jsonls = require "custom.plugs.config.lsp.jsonls",
-    -- taplo = require "custom.plugs.config.lsp.taplo",
-    -- yamlls = require "custom.plugs.config.lsp.yamlls",
-    -- clangd = require "custom.plugs.config.lsp.clangd",
+    marksman = require "custom.plugins.configs.lsp.marksman",
+    jsonls = require "custom.plugins.configs.lsp.jsonls",
+    taplo = require "custom.plugins.configs.lsp.taplo",
+    yamlls = require "custom.plugins.configs.lsp.yamlls",
+    clangd = require "custom.plugins.configs.lsp.clangd",
   }
 end
