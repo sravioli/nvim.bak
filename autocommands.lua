@@ -72,3 +72,10 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+-- Set filetype to "pseudo"
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  desc = "Set custom filetype for `.pseudo` files",
+  pattern = "*.pseudo",
+  command = "set filetype=pseudo.text | set syntax=pseudo",
+})
