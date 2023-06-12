@@ -1,5 +1,7 @@
 -- autocmds, nvim settings and more here
 
+vim.cmd [[syntax enable]]
+
 -- mimic vimscript syntax
 local let = vim.g
 local set = vim.opt
@@ -14,13 +16,15 @@ set.updatetime = 200
 set.tabstop = 2
 set.shiftwidth = 2
 set.expandtab = true
-set.termguicolors = true
 
 let.editorconfig = true
 let.code_action_menu_window_border = require "custom.assets.border"
 let.load_doxygen_syntax = 1
 let.doxygen_javadoc_autobrief = 0
 let.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets"
+
+-- load custom autocommands
+require "custom.autocommands"
 
 -- load the desired providers
 local providers = {
@@ -52,6 +56,3 @@ function _G.align_markdown_table()
     vim.fn.search(("[^|]*|"):rep(col) .. ("\\s\\{-\\}"):rep(pos), "ce", linenr)
   end
 end
-
--- load custom autocommands
-require "custom.autocommands"
