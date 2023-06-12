@@ -51,6 +51,25 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
   group = cursorGrp,
 })
 
+-- (Barbecue) Gain better performance when moving the cursor around
+vim.api.nvim_create_autocmd({
+  "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+  "BufWinEnter",
+  "CursorHold",
+  "InsertLeave",
+
+  -- include these if you have set `show_modified` to `true`
+  "BufWritePost",
+  "TextChanged",
+  "TextChangedI",
+}, {
+  desc = "Update Barbecue winbar",
+  group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+  callback = function()
+    require("barbecue.ui").update()
+  end,
+})
+
 -- Redefine and improve doxygen highlights groups
 local doxygen_patterns = {
   { pattern = "doxygenComment", highlight = "Comment" },
@@ -66,6 +85,9 @@ vim.api.nvim_create_autocmd("FileType", {
   desc = "Apply new doxygen syntax",
   pattern = { "c", "cpp", "doxygen" },
   callback = function()
+    vim.cmd [[set filetype=doxygen]]
+    vim.cmd [[set syntax=c.doxygen]]
+
     for _, doxygen in ipairs(doxygen_patterns) do
       local pattern, highlight = doxygen.pattern, doxygen.highlight
       vim.cmd(string.format("highlight link %s %s", pattern, highlight)) -- Define highlighting attributes
