@@ -27,15 +27,36 @@ let.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets"
 require "custom.autocommands"
 
 -- load the desired providers
+local function get_os()
+  local separator = package.config:sub(1, 1)
+  if separator == "\\" then
+    return "win"
+  elseif separator == "/" then
+    return "lnx"
+  end
+end
+
 local providers = {
-  { prov = "node", path = "/home/linuxbrew/.linuxbrew/bin/neovim-node-host" },
-  { prov = "ruby", path = "/home/linuxbrew/.linuxbrew/bin/ruby" },
-  { prov = "perl", path = "/usr/bin/perl" },
-  { prov = "python3", path = "/home/sravioli/.py-nvim/bin/python3" },
+  node = {
+    lnx = "/home/linuxbrew/.linuxbrew/bin/neovim-node-host",
+    win = "C:/Program Files/nodejs/node.exe",
+  },
+  ruby = {
+    lnx = "/home/linuxbrew/.linuxbrew/bin/ruby",
+    win = 0,
+  },
+  perl = {
+    lnx = "/usr/bin/perl",
+    win = 0,
+  },
+  python3 = {
+    lnx = "/home/sravioli/.py-nvim/bin/python3",
+    win = 0,
+  },
 }
-for _, provider in ipairs(providers) do
-  let["loaded_" .. provider.prov .. "_provider"] = nil
-  let[provider.prov .. "_host_prog"] = provider.path
+for prov, path in pairs(providers) do
+  let["loaded_" .. prov .. "_provider"] = nil
+  let[prov .. "_host_prog"] = path[get_os()]
 end
 
 function _G.align_markdown_table()
