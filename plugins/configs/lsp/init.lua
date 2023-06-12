@@ -59,8 +59,8 @@ local servers = {
   "marksman",
   "jsonls",
   "taplo",
-  -- "yamlls",
-  -- "clangd",
+  "yamlls",
+  "clangd",
 }
 
 for _, lsp in ipairs(servers) do
