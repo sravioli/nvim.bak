@@ -50,6 +50,9 @@ local sources = {
       "{SpacesBeforeTrailingComments: 2, AlignTrailingComments: {Kind: Always, OverEmptyLines: 2}}",
     },
   },
+
+  null_ls.builtins.formatting.latexindent,
+  null_ls.builtins.diagnostics.chktex,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
