@@ -27,7 +27,18 @@ local sources = {
   null_ls.builtins.formatting.taplo,
 
   null_ls.builtins.diagnostics.yamllint,
-  null_ls.builtins.formatting.yamlfix,
+  null_ls.builtins.formatting.yamlfix.with {
+    extra_args = function()
+      local file = vim.fn.findfile ".yamlfix.toml"
+      if file then
+        print "file found"
+        return { "--config-file", file }
+      else
+        print "no file, no config"
+        return {}
+      end
+    end,
+  },
   null_ls.builtins.diagnostics.actionlint,
 
   null_ls.builtins.formatting.fixjson,
