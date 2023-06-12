@@ -61,6 +61,7 @@ local servers = {
   "taplo",
   "yamlls",
   "clangd",
+  "texlab",
 }
 
 for _, lsp in ipairs(servers) do
@@ -71,6 +72,7 @@ for _, lsp in ipairs(servers) do
 
     settings = {
       Lua = require "custom.plugins.configs.lsp.lua_ls",
+      texlab = require "custom.plugins.configs.lsp.texlab",
     },
 
     marksman = require "custom.plugins.configs.lsp.marksman",
