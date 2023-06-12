@@ -24,5 +24,8 @@ return {
 
     "cspell",
     "codespell",
+
+    "latexindent",
+    "texlab",
   },
 }
