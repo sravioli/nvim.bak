@@ -1,6 +1,14 @@
+local function shell()
+  if package.config.sub(1, 1) == "/" then
+    return "bash"
+  else
+    return "pwsh"
+  end
+end
+
 return {
   terminals = {
-    shell = "bash",
+    shell = shell(),
     type_opts = {
       float = {
         relative = "editor",
