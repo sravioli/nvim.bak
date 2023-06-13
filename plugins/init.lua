@@ -321,9 +321,4 @@ return {
     config = true,
     event = "BufAdd",
   },
-  {
-    -- Neovim plugin for creating live-updating-as-you-type previews of LaTeX,
-    -- markdown, and other files in the viewer of your choice.
-    "frabjous/knap",
-  },
 }
