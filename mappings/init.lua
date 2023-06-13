@@ -7,4 +7,5 @@ return {
   goto_preview = require "custom.mappings.goto-preview",
   inc_rename = require "custom.mappings.inc-rename",
   smart_splits = require "custom.mappings.smart-splits",
+  knap = require "custom.mappings.knap",
 }
