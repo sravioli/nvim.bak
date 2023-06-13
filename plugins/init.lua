@@ -82,6 +82,7 @@ return {
     config = function()
       require("trouble").setup { use_diagnostic_signs = true }
     end,
+    event = "BufWinEnter",
   },
   {
     -- A markdown preview directly in your neovim.
