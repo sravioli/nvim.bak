@@ -3,13 +3,13 @@ return {
   bibtexFormatter = "texlab",
   build = {
     args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-    executable = "latexmk",
+    executable = "pdflatex",
     forwardSearchAfter = false,
-    onSave = false,
+    onSave = true,
   },
   chktex = {
     onEdit = false,
-    onOpenAndSave = false,
+    onOpenAndSave = true,
   },
   diagnosticsDelay = 300,
   formatterLineLength = 80,
@@ -18,6 +18,6 @@ return {
   },
   latexFormatter = "latexindent",
   latexindent = {
-    modifyLineBreaks = false,
+    modifyLineBreaks = true,
   },
 }
