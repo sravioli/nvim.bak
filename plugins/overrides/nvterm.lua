@@ -1,5 +1,5 @@
 local function shell()
-  if package.config.sub(1, 1) == "/" then
+  if package.config:sub(1, 1) == "/" then
     return "bash"
   else
     return "pwsh"
