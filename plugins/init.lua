@@ -219,7 +219,7 @@ return {
     -- Invert text in vim, purely with lua.
     "nguyenvukhang/nvim-toggler",
     config = function()
-      require "custom.plugs.config.toggler"
+      require "custom.plugins.configs.toggler"
     end,
     keys = { "<leader>i" },
   },
