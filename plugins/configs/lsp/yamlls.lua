@@ -5,7 +5,7 @@ return {
   yamlVersion = "1.2",
 
   format = {
-    enable = true,
+    enable = false,
     singleQuote = false,
     bracketSpacing = true,
     proseWrap = "Always",
@@ -18,7 +18,7 @@ return {
 
   schemas = {
     kubernetes = "*.yaml",
-    ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+    ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*.{yml,yaml}",
     ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
     ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
     ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
