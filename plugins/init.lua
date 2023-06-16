@@ -321,4 +321,9 @@ return {
     config = true,
     event = "BufAdd",
   },
+  {
+    -- Markdown Vim Mode
+    "ixru/nvim-markdown",
+    ft = "markdown",
+  },
 }
