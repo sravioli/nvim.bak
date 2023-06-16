@@ -23,6 +23,13 @@ let.load_doxygen_syntax = 1
 let.doxygen_javadoc_autobrief = 0
 let.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets"
 
+-- nvim-markdown settings
+let.vim_markdown_conceal = 2
+let.tex_conceal = ""
+let.vim_markdown_math = 1
+let.vim_markdown_math = 1
+let.vim_markdown_frontmatter = 1
+
 -- load custom autocommands
 require "custom.autocommands"
 
@@ -43,15 +50,15 @@ local providers = {
   },
   ruby = {
     lnx = "/home/linuxbrew/.linuxbrew/bin/ruby",
-    win = 0,
+    win = "C:/tools/ruby31/bin/ruby.exe",
   },
   perl = {
     lnx = "/usr/bin/perl",
-    win = 0,
+    win = "C:/Strawberry/perl/bin/perl.exe",
   },
   python3 = {
     lnx = "/home/sravioli/.py-nvim/bin/python3",
-    win = 0,
+    win = "C:/Users/fsimo/.py-nvim/Scripts/python.exe",
   },
 }
 for prov, path in pairs(providers) do
@@ -59,7 +66,7 @@ for prov, path in pairs(providers) do
   let[prov .. "_host_prog"] = path[get_os()]
 end
 
-function _G.align_markdown_table()
+function _G.align_table()
   local pattern = "^%s*|%s.*%s|%s*$"
   local linenr, colnr = vim.fn.line ".", vim.fn.col "."
   local curr_line = vim.fn.getline "."
