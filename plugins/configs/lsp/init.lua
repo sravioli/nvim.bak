@@ -62,6 +62,7 @@ local servers = {
   "yamlls",
   "clangd",
   "texlab",
+  "powershell_es",
 }
 
 for _, lsp in ipairs(servers) do
@@ -80,5 +81,6 @@ for _, lsp in ipairs(servers) do
     taplo = require "custom.plugins.configs.lsp.taplo",
     yamlls = require "custom.plugins.configs.lsp.yamlls",
     clangd = require "custom.plugins.configs.lsp.clangd",
+    powershell_es = require "custom.plugins.configs.lsp.powershell_es",
   }
 end
