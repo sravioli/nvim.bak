@@ -31,7 +31,7 @@ let.vim_markdown_math = 1
 let.vim_markdown_frontmatter = 1
 
 -- load custom autocommands
-require "custom.autocommands"
+require "custom.utils.autocommands"
 
 -- load the desired providers
 local function get_os()
@@ -64,23 +64,4 @@ local providers = {
 for prov, path in pairs(providers) do
   let["loaded_" .. prov .. "_provider"] = nil
   let[prov .. "_host_prog"] = path[get_os()]
-end
-
-function _G.align_table()
-  local pattern = "^%s*|%s.*%s|%s*$"
-  local linenr, colnr = vim.fn.line ".", vim.fn.col "."
-  local curr_line = vim.fn.getline "."
-  local prev_line, next_line = vim.fn.getline(linenr - 1), vim.fn.getline(linenr + 1)
-
-  if
-    vim.fn.exists ":Tabularize"
-    and curr_line:match "^%s*|"
-    and (prev_line:match(pattern) or next_line:match(pattern))
-  then
-    local col = #curr_line:sub(1, colnr):gsub("[^|]", "")
-    local pos = #vim.fn.matchstr(curr_line:sub(1, colnr), ".*|\\s*\\zs.*")
-    vim.cmd "Tabularize/|/l1" -- `l` means left aligned and `1` means one space of cell padding
-    vim.cmd "normal! 0"
-    vim.fn.search(("[^|]*|"):rep(col) .. ("\\s\\{-\\}"):rep(pos), "ce", linenr)
-  end
 end
