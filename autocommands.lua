@@ -1,18 +1,20 @@
 ----// AUTOCOMMANDS //-----------------------------------------------
+local au = vim.api.nvim_create_autocmd
+local aug = vim.api.nvim_create_augroup
 
 -- Restore the >_ cursor when exiting nvim
-local cursorGrp = vim.api.nvim_create_augroup("CursorLine", { clear = true })
-vim.api.nvim_create_autocmd("VimLeave", {
+local CursorGrp = aug("CursorLine", { clear = true })
+au("VimLeave", {
   desc = "Restore WindowsTerminal cursor shape upon exit",
   pattern = "*",
   command = "set guicursor=a:hor20-blinkon1",
-  group = cursorGrp,
+  group = CursorGrp,
 })
 
 -- Highlight text on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+au("TextYankPost", {
   desc = "Highlight selection on yank",
-  group = vim.api.nvim_create_augroup("highlight_yank", {}),
+  group = aug("HighlightYank", {}),
   pattern = "*",
   callback = function()
     vim.highlight.on_yank { higroup = "Search", timeout = 200 }
@@ -20,7 +22,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- Quit from some windows by only pressing q
-vim.api.nvim_create_autocmd("FileType", {
+local EasyExit = aug("EasyExit", {})
+au("FileType", {
   desc = "Exit some views with 'q'",
   pattern = {
     "help",
@@ -31,28 +34,30 @@ vim.api.nvim_create_autocmd("FileType", {
     "dap-float",
   },
   command = [[nnoremap <buffer><silent> q :quit<CR>]],
+  group = EasyExit,
 })
-vim.api.nvim_create_autocmd("FileType", {
+au("FileType", {
   pattern = "man",
   command = [[nnoremap <buffer><silent> q :quit<CR>]],
+  group = EasyExit,
 })
 
 -- When having multiple buffers, show cursor only in the active one
-vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+au({ "InsertLeave", "WinEnter" }, {
   desc = "Show cursor in current buffer",
   pattern = "*",
   command = "set cursorline",
-  group = cursorGrp,
+  group = CursorGrp,
 })
-vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+au({ "InsertEnter", "WinLeave" }, {
   desc = "Hide cursor in non active buffer",
   pattern = "*",
   command = "set nocursorline",
-  group = cursorGrp,
+  group = CursorGrp,
 })
 
 -- (Barbecue) Gain better performance when moving the cursor around
-vim.api.nvim_create_autocmd({
+au({
   "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
   "BufWinEnter",
   "CursorHold",
@@ -64,24 +69,25 @@ vim.api.nvim_create_autocmd({
   "TextChangedI",
 }, {
   desc = "Update Barbecue winbar",
-  group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+  group = aug("barbecue.updater", {}),
   callback = function()
     require("barbecue.ui").update()
   end,
 })
 
 -- Redefine and improve doxygen highlights groups
+local CustomHighlights = aug("CustomHighlights", {})
 local doxygen_patterns = {
   { pattern = "doxygenComment", highlight = "Comment" },
   { pattern = "doxygenCommentWhite", highlight = "Comment" },
-  { pattern = "doxygenParam ", highlight = "Conditional " },
-  { pattern = "doxygenSpecial ", highlight = "Conditional " },
-  { pattern = "doxygenBriefLine ", highlight = "Function " },
-  { pattern = "doxygenSpecialMultilineDesc ", highlight = "Comment " },
-  { pattern = "doxygenCodeWord ", highlight = "Float " },
-  { pattern = "doxygenBody ", highlight = "String" },
+  { pattern = "doxygenParam", highlight = "Conditional" },
+  { pattern = "doxygenSpecial", highlight = "Conditional" },
+  { pattern = "doxygenBriefLine", highlight = "Function" },
+  { pattern = "doxygenSpecialMultilineDesc", highlight = "Comment" },
+  { pattern = "doxygenCodeWord", highlight = "Float" },
+  { pattern = "doxygenBody", highlight = "String" },
 }
-vim.api.nvim_create_autocmd("FileType", {
+au("FileType", {
   desc = "Apply new doxygen syntax",
   pattern = { "c", "cpp", "doxygen" },
   callback = function()
@@ -93,11 +99,36 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.cmd(string.format("highlight link %s %s", pattern, highlight)) -- Define highlighting attributes
     end
   end,
+  group = CustomHighlights,
 })
 
 -- Set filetype to "pseudo"
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+au({ "BufNewFile", "BufRead" }, {
   desc = "Set custom filetype for `.pseudo` files",
   pattern = "*.pseudo",
   command = "set filetype=pseudo.text | set syntax=pseudo",
+})
+
+-- Change some highlight groups for markdown
+au("FileType", {
+  desc = "Highlight comments in markdown",
+  pattern = "markdown",
+  command = [[syntax match @comment :<!--.*-->:]],
+  group = CustomHighlights,
+})
+au("FileType", {
+  desc = "Change highlight groups",
+  pattern = "markdown",
+  command = [[highlight! link @text.emphasis Italic]],
+  group = CustomHighlights,
+})
+
+-- Enable markdown auto-align table
+au("FileType", {
+  desc = "Align markdown tables as you type",
+  pattern = "markdown",
+  callback = function()
+    vim.keymap.set("i", "<Bar>", "<Bar> <C-o>:lua align_table()<CR>")
+  end,
+  group = aug("AutoAlignTable", {}),
 })
