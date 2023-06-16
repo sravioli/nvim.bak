@@ -46,7 +46,7 @@ end
 local providers = {
   node = {
     lnx = "/home/linuxbrew/.linuxbrew/bin/neovim-node-host",
-    win = "C:/Program Files/nodejs/node.exe",
+    win = "C:/Users/fsimo/AppData/Roaming/npm/node_modules/neovim/bin/cli.js",
   },
   ruby = {
     lnx = "/home/linuxbrew/.linuxbrew/bin/ruby",
