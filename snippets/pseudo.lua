@@ -68,8 +68,8 @@ return {
     { trig = "fopen", dscr = "open and close a file" },
     fmt(
       [[
-      file = AprireFile({filename})
-      SE (file non esiste) 
+      file := AprireFile({filename})
+      SE (file non esiste)
         ALLORA esci
       FINE
       {}
@@ -203,7 +203,7 @@ return {
       FUNZIONE {}()
       {}
 
-      INPUT: 
+      INPUT:
       - {}, {}, {};
 
       OUTPUT:
@@ -235,9 +235,9 @@ return {
     fmt(
       [[
       FUNZIONE {}()
-      {} 
+      {}
 
-      INPUT: 
+      INPUT:
       - {}, {}, {};
 
       OUTPUT:
@@ -277,7 +277,7 @@ return {
       OUTPUT:
       - nullo, non restituisce nulla.
 
-      LAVORO: 
+      LAVORO:
       - {}, {}, {};
 
       ALGORITMO:
@@ -326,7 +326,7 @@ return {
     { trig = "in", dscr = "INPUT block" },
     fmt(
       [[
-      INPUT: 
+      INPUT:
       - {}, {}, {};
 
       ]],
@@ -337,7 +337,7 @@ return {
     { trig = "out", dscr = "OUTPUT block" },
     fmt(
       [[
-      OUTPUT: 
+      OUTPUT:
       - {}, {}, {};
 
       ]],
@@ -348,7 +348,7 @@ return {
     { trig = "work", dscr = "LAVORO block" },
     fmt(
       [[
-      LAVORO: 
+      LAVORO:
       - {}, {}, {};
 
       ]],
@@ -379,9 +379,9 @@ return {
     { trig = "if", dscr = "if statement" },
     fmt(
       [[
-      SE ({})
-        ALLORA {}
-      FINE
+      SE ({}) ALLORA 
+        {}
+      FINE SE
       ]],
       { i(1, "condition"), i(2) }
     )
@@ -394,10 +394,11 @@ return {
     { trig = "ife", dscr = "if-else statement" },
     fmt(
       [[
-      SE ({})
-        ALLORA {}
-        ALTRIMENTI {}
-      FINE
+      SE ({}) ALLORA 
+        {}
+      ALTRIMENTI 
+        {}
+      FINE SE
       ]],
       { i(1, "condition"), i(2), i(3) }
     )
@@ -406,9 +407,9 @@ return {
     { trig = "elif", dscr = "else-if statement" },
     fmt(
       [[
-      ALTRIMENTI SE ({})
-        ALLORA {}
-      FINE
+      ALTRIMENTI SE ({}) ALLORA 
+        {}
+      FINE SE
       ]],
       { i(1, "condition"), i(2) }
     )
@@ -419,7 +420,7 @@ return {
       [[
       MENTRE ({})
         {}
-      FINE
+      FINE MENTRE
       ]],
       { i(1, "condition"), i(0) }
     )
@@ -430,7 +431,7 @@ return {
       [[
       MENTRE ({} <> {})
         {}
-      FINE
+      FINE MENTRE
       ]],
       { i(1, "var"), i(2, "from"), i(0) }
     )
@@ -442,7 +443,7 @@ return {
       ESEGUI
         {}
       FINCHÉ ({})
-      FINE
+      FINE FINCHÉ
       ]],
       { i(0), i(1, "condition") }
     )
@@ -455,7 +456,7 @@ return {
       MENTRE ({var} {cond})
         {code}
         {var} := {var} + {inc}
-      FINE
+      FINE MENTRE
       ]],
       {
         var = i(1, "var"),
@@ -475,7 +476,7 @@ return {
       MENTRE (i {cond})
         {code}
         i := i + {inc}
-      FINE
+      FINE MENTRE
       ]],
       {
         val = i(1, "0"),
@@ -494,7 +495,7 @@ return {
       MENTRE ({var} < {str}_len)
         {code}
         {var} := {var} + {inc}
-      FINE
+      FINE MENTRE
       ]],
       {
         str = i(1, "string"),
@@ -516,7 +517,7 @@ return {
         StampareAVideo("{err}")
         StampareAVideo("{ask}")
         {input} := LeggereDaTastiera()
-      FINE
+      FINE MENTRE
       ]],
       {
         cond = i(1, "keep asking until"),
@@ -682,7 +683,7 @@ return {
       FUNZIONE get_{field}()
       {line}
 
-      Restituisce il valore del campo {field} del record {record_type} all'indice 
+      Restituisce il valore del campo {field} del record {record_type} all'indice
       dato.
 
       INPUT:
