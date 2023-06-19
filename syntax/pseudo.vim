@@ -117,11 +117,11 @@ syntax match pseudoFunctionCall /\v<[a-z][a-z0-9_]*>(\(|.*\))@=/ contained
 syntax match pseudoDelimiters   /[,()\[\]{}]/                    contained
 syntax match pseudoVariable     /\<[a-z][a-z0-9_]*\>\((\)\@!/    contained
 syntax match pseudoOperators    /[:=\*\/+-]/                     contained
-syntax match pseudoString       /\(\w\)\@!\(".*"\|'.*'\)/        contained
+syntax match pseudoString       /\(\w\)\@!\(".*"\|'.*'\)/        containedin=ALL
 syntax match pseudoCharacter    /'\w'/                           contained
 syntax match pseudoEscape       /\\\w\+\>/                       containedin=pseudoString
-syntax match pseudoInteger      /\v(<\d+>|<[-+]\d+>)/            contained
-syntax match pseudoFloat        /\v(<\d+\.\d*>|<[-+]\d+\.\d*>)/  contained
+syntax match pseudoInteger      /\v(<\d+>|<[-+]\d+>)/            containedin=ALL
+syntax match pseudoFloat        /\v(<\d+\.\d*>|<[-+]\d+\.\d*>)/  containedin=ALL
 
 syntax match pseudoLogicalNot /\v<NOT\s|NOT>/  conceal cchar=¬ contained
 syntax match pseudoLogicalAnd /\<AND\>/        conceal cchar=& contained
