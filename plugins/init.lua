@@ -326,4 +326,13 @@ return {
     "ixru/nvim-markdown",
     ft = "markdown",
   },
+  {
+    "johnfrankmorgan/whitespace.nvim",
+    event = "BufWinEnter",
+    setup = function()
+      require("whitespace-nvim").setup {
+        highlight = "Error",
+      }
+    end,
+  },
 }
