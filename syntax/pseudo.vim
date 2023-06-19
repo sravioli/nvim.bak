@@ -12,206 +12,104 @@ endif
 " BUFFER SPECIFIC OPTIONS
 " ----------------------------------------------------------------------------
 let &l:conceallevel=1
-let &l:concealcursor="n"
+syntax clear
+
+syntax keyword pcodeInclude          vedere
+syntax keyword pcodeKeywords         FUNZIONE INPUT OUTPUT LAVORO ALGORITMO
+syntax keyword pcodeBooleans         TRUE FALSE
+syntax keyword pcodeConditionals     SE ALLORA ALTRIMENTI
+syntax keyword pcodeRepeats          MENTRE ESEGUI FINCHÉ
+syntax keyword pcodeTypes            intero reale decimale stringa carattere array
+syntax keyword pcodeNumbersWords     zero uno due tre quattro cinque sei sette
+                                   \ otto nove dieci
+syntax keyword pcodeBuiltinFunctions StampareAVideo LeggereDaTastiera AprireFile
+                                   \ ChiudereFile LeggereDaFile ScrivereSuFile
 
 
-" ----------------------------------------------------------------------------
-" DOCUMENT WIDE HIGHLIGHTS
-" ----------------------------------------------------------------------------
-syntax match pseudoHorizontalRule /^-\+$/            containedin=ALL
-syntax match pseudoCommentInline  ://.*$:            containedin=ALL
-syntax match pseudoBoolean        /\v(TRUE|FALSE)/   containedin=ALL
-syntax match pseudoConstant       /\v(INPUT|OUTPUT|LAVORO|ALGORITMO|SE|ALLORA|ALTRIMENTI|FINE|MENTRE|NOT|OR|AND)@!<[A-Z][A-Z_]*>/ containedin=ALLBUT,@pseudoPreambleCluster,@pseudoFunctionCluster
+syntax match pcodeDelimiters     /[,;()\[\]{}]/
+syntax match pcodeDocumentTitle  /\%^[A-Z][A-Z ]*$/
+syntax match pcodeHeader         /^=\+$/
+syntax match pcodeConstants      /\v(%^[A-Z][A-Z ]*)@!<[A-Z][A-Z_]*>/
+syntax match pcodeNumbers        /\v(<\d+>|<[-+]\d+>)/
+syntax match pcodeFloats         /\v(<\d+\.\d*>|<[-+]\d+\.\d*>)/
+syntax match pcodeIncludePath    /\v"\.\/([^"]+\.[^"]+)"/ containedin=pcodeString
+syntax match pcodeHorizontalRule /^-\+$/
+syntax match pcodeFunctionCall   /\v<[a-z][a-z0-9_]*>(\((|.*)\))@=/
+syntax match pcodeInlineComment  #//.*$#
+syntax match pcodeString         /\w\@<!\(".*"\|'.*'\)/
+syntax match pcodeRegexString    /r".*"/
+syntax match pcodeCharacter      /\w\@<!'\w'/
+syntax match pcodeEscapeSequence /\(\\\w\+\|\\\d\+\)/ containedin=pcodeString
 
-syntax match pseudoWhitespace 
-  \ /\(\%u0009\|\%u000A\|\%u000B\|\%u000C\|\%u000D\|\%u0020\|\%u0085\|\%u00A0\|\%u1680\|\%u2000\|\%u2001\|\%u2002\|\%u2003\|\%u2004\|\%u2005\|\%u2006\|\%u2007\|\%u2008\|\%u2009\|\%u200A\|\%u2028\|\%u2029\|\%u202F\|\%u205F\|\%u3000\)\+$/ containedin=ALL
 
-syntax region pseudoCommentBlock containedin=ALL
+syn match pcodeRepeatsEnd
+  \ /\v^(|\s+)<FINE>\s(<SE>)@!<(MENTRE|ESEGUI)>(|\s+)$/
+syn match pcodeConditionalsEnd
+  \ /\v^(|\s+)<FINE>\s(<MENTRE>|<ESEGUI>)@!<SE>(|\s+)$/
+
+syntax match pcodeParameterName
+  \ /\v^-\s\zs<[a-z][a-z0-9_]*>\ze,/
+syntax match pcodeParameterDescription
+  \ /\v(^-\s<[a-z][a-z0-9_]*>,\s)@<=(.*|.*\n\s{2}.*)\ze,/
+syntax match pcodeParameterType
+  \ /\v(^-\s<[a-z][a-z0-9_]*>,\s(.*|.*\n\s{2}.*)\ze,)@<=\s<\k+>/
+
+syntax region pcodeCommentBlock
   \ start=:/\*:
   \ end=  :\*/:
 
 
-" ----------------------------------------------------------------------------
-" BEGINNING OF A PSEUDOCODE FILE
-" ----------------------------------------------------------------------------
-syntax region pseudoFilePreamble contains=@pseudoPreambleCluster
-  \ transparent
-  \ start=/\%^/
-  \ end=  /^\ze-\+$/
+syntax match pcodeLogicalNot /\v<NOT\s|NOT>/ conceal cchar=¬
+syntax match pcodeLogicalAnd /\<AND\>/       conceal cchar=&
+syntax match pcodeLogicalOr  /\<OR\>/        conceal cchar=∥
 
-syntax keyword pseudoIncludeDirective vedere contained
+syntax match pcodeGreater      /maggiore di /         conceal cchar=󰥭
+syntax match pcodeGreaterEqual /maggiore o uguale a / conceal cchar=󰥮
+syntax match pcodeLesser       /minore di /           conceal cchar=󰥼
+syntax match pcodeLesserThan   /minore o uguale a /   conceal cchar=󰥽
 
-syntax match pseudoFileTitle   /\%^[A-Z][A-Z ]*$/       contained
-syntax match pseudoIncludeFile /\v"\.\/([^"]+\.[^"]+)"/ contained
-syntax match pseudoFileHeader  /^=\+$/                  contained
+syntax match pcodePositive / positivo/ conceal cchar=󰐕
+syntax match pcodeNegative / negativo/ conceal cchar=󰍴
 
-syntax cluster pseudoPreambleCluster contains=
-  \ pseudoFileTitle,
-  \ pseudoFileHeader,
-  \ pseudoIncludeDirective,
-  \ pseudoIncludeFile
+syntax match pcodePlusEquals   conceal cchar=+
+  \ #\v^(|\s+)(<[a-z][a-z0-9_]*>) :\zs\= \2 \+#
+syntax match pcodeMinusEquals  conceal cchar=-
+  \ #\v^(|\s+)(<[a-z][a-z0-9_]*>) :\zs\= \2 \-#
+syntax match pcodeTimesEquals  conceal cchar=*
+  \ #\v^(|\s+)(<[a-z][a-z0-9_]*>) :\zs\= \2 \*#
+syntax match pcodeDivideEquals conceal cchar=/
+  \ #\v^(|\s+)(<[a-z][a-z0-9_]*>) :\zs\= \2 \/#
 
+" highlight def IncludePath 
+exec 'highlight IncludePath cterm=underline gui=underline ' .
+  \ 'guifg=' . synIDattr(synIDtrans(hlID('String')), 'fg', 'gui')
 
-" ----------------------------------------------------------------------------
-" FUNCTION DECLARATION
-" ----------------------------------------------------------------------------
-syntax region pseudoFunctionDeclaration contains=@pseudoFunctionCluster
-  \ transparent
-  \ start=/^\vFUNZIONE (.*)$/
-  \ end=  /^ALGORITMO:$/
+highlight link pcodeInclude            Include
+highlight link pcodeKeywords           Special
+highlight link pcodeBooleans           Boolean
+highlight link pcodeConditionals       Conditional
+highlight link pcodeRepeats            Repeat
+highlight link pcodeTypes              Type
+highlight link pcodeNumbersWords       Number
+highlight link pcodeBuiltinFunctions   Function
 
-syntax keyword pseudoFunctionKeyword FUNZIONE                      contained
-syntax keyword pseudoKeywords        INPUT OUTPUT LAVORO ALGORITMO contained
-
-syntax match pseudoFunctionTitle       /\v(^FUNZIONE\s)@<=<[a-z][a-z0-9_]*>/  contained
-syntax match pseudoFunctionHeader      /^=\+$/                                contained
-syntax match pseudoFunctionDescription /\v(^\=+$\n)@<=\_.{-}\n\n(^INPUT:$)@=/ contained
-
-syntax cluster pseudoFunctionCluster contains=
-  \ pseudoFunctionKeyword,
-  \ pseudoKeywords,
-  \ pseudoFunctionTitle,
-  \ pseudoFunctionHeader,
-  \ pseudoFunctionDescription,
-  \ pseudoParameterDeclaration,
-
-
-" ----------------------------------------------------------------------------
-" PARAMETER DECLARATION
-" ----------------------------------------------------------------------------
-syntax region pseudoParameterDeclaration contains=@pseudoParameterCluster
-  \ transparent contained
-  \ start=/^-\s/
-  \ end=  /\v(\.|;)$/
-
-syn match pseudoParameterSeparator /,/ contained
-
-syntax match pseudoParameterName     contained
-  \ /\v^-\s\zs<[a-z][a-z0-9_]*>\ze,/ 
-syntax match pseudoParameterDescript contained
-  \ /\v(^-\s<[a-z][a-z0-9_]*>,\s)@<=(.*|.*\n\s{2}.*)\ze,/
-syntax match pseudoParameterType     contained
-  \ /\v(^-\s<[a-z][a-z0-9_]*>,\s(.*|.*\n\s{2}.*)\ze,)@<=\s<\w+>/
-
-syntax cluster pseudoParameterCluster contains=
-  \ pseudoParameterSeparator,
-  \ pseudoParameterName,
-  \ pseudoParameterDescription,
-  \ pseudoParameterType
-
-
-" ----------------------------------------------------------------------------
-" ALGORITHM BLOCK
-" ----------------------------------------------------------------------------
-syntax region pseudoAlgorithmBlock contains=@pseudoAlgorithmCluster nextgroup=pseudoAlgorithmBlock
-  \ start=/^ALGORITMO:$/
-  \ end=  /^\ze-\+$/
-
-syntax keyword pseudoAlgorithmKeyword ALGORITMO contained
-
-syntax keyword pseudoFunctionBuiltins contained
-  \ StampareAVideo LeggereDaTastiera AprireFile ChiudereFile LeggereDaFile 
-  \ ScrivereSuFile
-
-syntax match pseudoFunctionCall /\v<[a-z][a-z0-9_]*>(\(|.*\))@=/ contained
-syntax match pseudoDelimiters   /[,()\[\]{}]/                    contained
-syntax match pseudoVariable     /\<[a-z][a-z0-9_]*\>\((\)\@!/    contained
-syntax match pseudoOperators    /[:=\*\/+-]/                     contained
-syntax match pseudoString       /\(\w\)\@!\(".*"\|'.*'\)/        containedin=ALL
-syntax match pseudoCharacter    /'\w'/                           contained
-syntax match pseudoEscape       /\\\w\+\>/                       containedin=pseudoString
-syntax match pseudoInteger      /\v(<\d+>|<[-+]\d+>)/            containedin=ALL
-syntax match pseudoFloat        /\v(<\d+\.\d*>|<[-+]\d+\.\d*>)/  containedin=ALL
-
-syntax match pseudoLogicalNot /\v<NOT\s|NOT>/  conceal cchar=¬ contained
-syntax match pseudoLogicalAnd /\<AND\>/        conceal cchar=& contained
-syntax match pseudoLogicalOr  /\<OR\>/         conceal cchar=∥ contained
-
-syntax match pseudoConditionals /\v(|\s+)(FINE\s)@<!<SE>/                  contained
-syntax match pseudoConditionals /\v^(|\s+)<FINE>\s(<MENTRE>)@!<SE>(|\s+)$/ contained
-syntax match pseudoConditionals /\<ALTRIMENTI\>/                           contained
-syntax match pseudoConditionals /\<ALLORA\>/                               contained
-
-syntax match pseudoRepeats /\v^(|\s+)(FINE\s)@<!<MENTRE>(\s\(.*\)(|\s+)$)@=/ contained
-syntax match pseudoRepeats /\v^(|\s+)<FINE>\s(<SE>)@!<MENTRE>(|\s+)$/        contained
-
-syntax region pseudoConditional contains=@pseudoAlgorithmCluster
-   \ transparent contained
-   \ start=/\v^(|\s+)(FINE\s)@<!<SE>(\s\(.*\)\sALLORA(|\s+)$)@=/
-   \ end=  /\v^(|\s+)<FINE>\s(<MENTRE>)@!<SE>(|\s+)$/
-
-syntax region pseudoRepeat contains=@pseudoAlgorithmCluster
-  \ transparent contained
-  \ start=/\v^(|\s+)(FINE\s)@<!<MENTRE>(\s\(.*\)(|\s+)$)@=/
-  \ end=  /\v^(|\s+)<FINE>\s(<SE>)@!<MENTRE>(|\s+)$/
-
-
-syntax cluster pseudoAlgorithmCluster contains=
-  \ pseudoAlgorithmKeyword,
-  \ pseudoFunctionBuiltins,
-  \ pseudoFunctionCall,
-  \ pseudoVariable,
-  \ pseudoOperators,
-  \ pseudoString,
-  \ pseudoCharacter,
-  \ pseudoEscape,
-  \ pseudoInteger,
-  \ pseudoFloat,
-  \ pseudoLogicalOr,
-  \ pseudoLogicalNot,
-  \ pseudoLogicalAnd,
-  \ pseudoDelimiters,
-  \ pseudoRepeat,
-  \ pseudoRepeats,
-  \ pseudoConditional,
-  \ pseudoConditionals
-
-
-" ----------------------------------------------------------------------------
-" HIGHLIGHTS
-" ----------------------------------------------------------------------------
-highlight link pseudoCommentInline  Comment
-highlight link pseudoCommentBlock   Comment
-highlight link pseudoHorizontalRule Comment
-highlight link pseudoConstant       Constant
-highlight link pseudoBoolean        Boolean
-highlight link pseudoWhitespace     Error
-
-highlight link pseudoFileTitle        Bold
-highlight link pseudoFileHeader       Title
-highlight link pseudoIncludeDirective Include
-highlight link pseudoIncludeFile      String
-
-highlight link pseudoKeywords         Keyword
-highlight link pseudoFunctionKeyword  Keyword
-highlight link pseudoAlgorithmKeyword Keyword
-
-highlight link pseudoFunctionTitle       Function
-highlight link pseudoFunctionHeader      Title
-highlight link pseudoFunctionDescription Italic
-
-highlight link pseudoParameterSeparator   Comment
-highlight link pseudoParameterName        Underlined
-highlight link pseudoParameterDescription Italic
-highlight link pseudoParameterType        Type
-
-highlight link pseudoString           String
-highlight link pseudoCharacter        Character
-highlight link pseudoEscape           Special
-highlight link pseudoOperators        Operator
-highlight link pseudoFunctionBuiltins Function
-highlight link pseudoFunctionCall     Function
-highlight link pseudoDelimiters       Delimiter
-highlight link pseudoVariable         Variable
-highlight link pseudoInteger          Number
-highlight link pseudoFloat            Float
-
-highlight link pseudoConditional  Conditional
-highlight link pseudoConditionals Conditional
-highlight link pseudoRepeat       Repeat
-highlight link pseudoRepeats      Repeat
-
-highlight link pseudoLogicalNot Conceal
-highlight link pseudoLogicalAnd Conceal
-highlight link pseudoLogicalOr  Conceal
+highlight link pcodeDelimiters           Delimiter
+highlight link pcodeDocumentTitle        Bold
+highlight link pcodeHeader               Title
+highlight link pcodeConstants            Constant
+highlight link pcodeNumbers              Number
+highlight link pcodeFloats               Float
+highlight link pcodeIncludePath          IncludePath
+highlight link pcodeHorizontalRule       Comment
+highlight link pcodeFunctionCall         Function
+highlight link pcodeInlineComment        Comment
+highlight link pcodeRepeatsEnd           Repeat
+highlight link pcodeConditionalsEnd      Conditional
+highlight link pcodeParameterName        Underlined
+highlight link pcodeParameterDescription Italic
+highlight link pcodeParameterType        Type
+highlight link pcodeString               String
+highlight link pcodeRegexString          Special
+highlight link pcodeCharacter            Character
+highlight link pcodeEscapeSequence       Special
 
