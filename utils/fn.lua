@@ -1,5 +1,12 @@
+---@module "functions"
+---@author sRavioli
+---@license GPL-3.0
+---@version 1.0.0
+
 return {
+  ---@type function Align a markdown table using `:Tabularize`
   align_table = function()
+    ---@type string Pattern to identify a markdown table
     local pattern = "^%s*|%s.*%s|%s*$"
     local linenr, colnr = vim.fn.line ".", vim.fn.col "."
     local curr_line = vim.fn.getline "."

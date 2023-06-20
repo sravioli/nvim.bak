@@ -1,6 +1,18 @@
--- neovim autocommands
+---User defined autocommands
+---@module "autocommands"
+---@author sRavioli
+---@license GPL-3.0
+
+---@type function Shorthand for `vim.api.nvim_create_autocmd`.
+---Add {cmd} to the list of commands that Vim will execute automatically on
+---{event} for a file matching {aupat} |autocmd-pattern|.  Note: A quote
+---character is seen as argument to the :autocmd and won't start a comment. Nvim
+---always adds {cmd} after existing autocommands so they execute in the order in
+---which they were defined.  See |autocmd-nested| for [++nested].
 local au = vim.api.nvim_create_autocmd
-local aug = require "custom.utils.augrups"
+
+---@type table User defined augroups
+local aug = require "custom.utils.augroups"
 
 -- Restore the >_ cursor when exiting nvim
 au("VimLeave", {
@@ -73,7 +85,8 @@ au({
   end,
 })
 
--- Redefine and improve doxygen highlights groups
+---@type table Doxygen highlight groups and what group to link to.
+---Redefine and improve doxygen highlights groups
 local doxygen_patterns = {
   { pattern = "doxygenComment", highlight = "Comment" },
   { pattern = "doxygenCommentWhite", highlight = "Comment" },
@@ -108,12 +121,6 @@ au({ "BufNewFile", "BufRead" }, {
 })
 
 -- Change some highlight groups for markdown
-au("FileType", {
-  desc = "Highlight comments in markdown",
-  pattern = "markdown",
-  command = [[syntax match @comment :<!--.*-->:]],
-  group = aug.custom_highlights,
-})
 au("FileType", {
   desc = "Change highlight groups",
   pattern = "markdown",
