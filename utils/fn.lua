@@ -3,7 +3,8 @@ return {
     local pattern = "^%s*|%s.*%s|%s*$"
     local linenr, colnr = vim.fn.line ".", vim.fn.col "."
     local curr_line = vim.fn.getline "."
-    local prev_line, next_line = vim.fn.getline(linenr - 1), vim.fn.getline(linenr + 1)
+    local prev_line, next_line =
+      vim.fn.getline(linenr - 1), vim.fn.getline(linenr + 1)
 
     if
       vim.fn.exists ":Tabularize"

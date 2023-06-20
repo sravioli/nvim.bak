@@ -3,7 +3,13 @@ return {
 
   build = {
     executable = "latexmk",
-    args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "-outdir=build", "%f" },
+    args = {
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-synctex=1",
+      "-outdir=build",
+      "%f",
+    },
     forwardSearchAfter = true,
     onSave = true,
   },
@@ -15,7 +21,8 @@ return {
       "--execute-command",
       "toggle_synctex", -- Open Sioyek in synctex mode.
       "--inverse-search",
-      [[nvim --headless -c "Lazy load nvim-lspconfig" %f -c "%l" --server ]] .. vim.v.servername,
+      [[nvim --headless -c "Lazy load nvim-lspconfig" %f -c "%l" --server ]]
+        .. vim.v.servername,
       "--forward-search-file",
       "%f",
       "--forward-search-line",

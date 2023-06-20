@@ -4,7 +4,10 @@ return {
   ----// OVERRIDE DEFAULTS //-----------------------------------------------
   { "NvChad/nvterm", opts = require "custom.plugins.overrides.nvterm" },
   { "williamboman/mason.nvim", opts = require "custom.plugins.overrides.mason" },
-  { "folke/which-key.nvim", opts = require "custom.plugins.overrides.which-key" },
+  {
+    "folke/which-key.nvim",
+    opts = require "custom.plugins.overrides.which-key",
+  },
   {
     "nvim-tree/nvim-tree.lua",
     opts = require "custom.plugins.overrides.nvim-tree",

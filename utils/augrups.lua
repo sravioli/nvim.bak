@@ -1,6 +1,5 @@
--- augroups for neovim
-
 local aug = vim.api.nvim_create_augroup
+
 return {
   cursor = aug("CursorGroup", {}),
   exit_views = aug("ExitViews", {}),

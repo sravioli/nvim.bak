@@ -126,7 +126,11 @@ au("FileType", {
   desc = "Align markdown tables as you type",
   pattern = "markdown",
   callback = function()
-    vim.keymap.set("i", "<Bar>", "<Bar> <C-o>:lua require('utils.fn').align_table()<CR>")
+    vim.keymap.set(
+      "i",
+      "<Bar>",
+      "<Bar> <C-o>:lua require('utils.fn').align_table()<CR>"
+    )
   end,
   group = aug.lua_functions,
 })

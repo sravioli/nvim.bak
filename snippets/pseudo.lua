@@ -59,9 +59,18 @@ return {
   s({ trig = "let", dscr = "declare a variable" }, fmt("{} := {}", { i(1), i(2) })),
   s({ trig = "pri", dscr = "print a string" }, fmt('StampareAVideo("{}")', i(1))),
   s({ trig = "priv", dscr = "print a variable" }, fmt("StampareAVideo({})", i(1))),
-  s({ trig = "scan", dscr = "get input from keyboard" }, fmt("{} := LeggereDaTastiera()", i(1))),
-  s({ trig = "fileread", dscr = "read from file" }, fmt('{} := LeggereDaFile("{}")', { i(1), i(2, "filename") })),
-  s({ trig = "filewrite", dscr = "write to file" }, fmt('{} := ScrivereSuFile("{}")', { i(1), i(2, "filename") })),
+  s(
+    { trig = "scan", dscr = "get input from keyboard" },
+    fmt("{} := LeggereDaTastiera()", i(1))
+  ),
+  s(
+    { trig = "fileread", dscr = "read from file" },
+    fmt('{} := LeggereDaFile("{}")', { i(1), i(2, "filename") })
+  ),
+  s(
+    { trig = "filewrite", dscr = "write to file" },
+    fmt('{} := ScrivereSuFile("{}")', { i(1), i(2, "filename") })
+  ),
   s({ trig = "tostr", dscr = "convert to string" }, fmt("int_to_str({})", i(1))),
   s({ trig = "toint", dscr = "convert to integer" }, fmt("str_to_int({})", i(1))),
   s(
@@ -79,14 +88,28 @@ return {
     )
   ),
   -- string utils
-  s({ trig = "strlen", dscr = "get length of a string" }, fmt("str_length({})", i(1, "string"))),
   s(
-    { trig = "stringlen", dscr = "get the length of a string and assign to variable" },
-    fmt("{s}_len := str_length({s})", { s = i(1, "string") }, { repeat_duplicates = true })
+    { trig = "strlen", dscr = "get length of a string" },
+    fmt("str_length({})", i(1, "string"))
+  ),
+  s(
+    {
+      trig = "stringlen",
+      dscr = "get the length of a string and assign to variable",
+    },
+    fmt(
+      "{s}_len := str_length({s})",
+      { s = i(1, "string") },
+      { repeat_duplicates = true }
+    )
   ),
   s(
     { trig = "strcopy", dscr = "copy a string" },
-    fmt("{s}_copy := str_copy({s})", { s = i(1, "string") }, { repeat_duplicates = true })
+    fmt(
+      "{s}_copy := str_copy({s})",
+      { s = i(1, "string") },
+      { repeat_duplicates = true }
+    )
   ),
   -- postfix magic
   postfix({
@@ -628,7 +651,10 @@ return {
   ),
 
   s(
-    { trig = "accessfns", dscr = "Both get and set functions in a single snipppet" },
+    {
+      trig = "accessfns",
+      dscr = "Both get and set functions in a single snipppet",
+    },
     fmt(
       [[
       FUNZIONE get_{field}()
@@ -677,7 +703,10 @@ return {
   ),
 
   s(
-    { trig = "accessfnsat", dscr = "Both get and set functions at a position in a single snipppet" },
+    {
+      trig = "accessfnsat",
+      dscr = "Both get and set functions at a position in a single snipppet",
+    },
     fmt(
       [[
       FUNZIONE get_{field}()

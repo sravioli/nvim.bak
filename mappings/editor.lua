@@ -17,7 +17,10 @@ return {
     ["<leader>nf"] = { "<cmd>Neogen<CR>", "Generate docstrings with Neogen" },
     ["<M-j>"] = { "ddp", "move line down" },
     ["<M-k>"] = { "ddkP", "move line up" },
-    ["<leader>tt"] = { ":lua require('whitespace-nvim').trim()<CR>", "trim whitespace" },
+    ["<leader>tt"] = {
+      ":lua require('whitespace-nvim').trim()<CR>",
+      "trim whitespace",
+    },
   },
 
   i = {

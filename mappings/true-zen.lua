@@ -6,6 +6,9 @@ return {
     ["<leader>za"] = { "<cmd>TZAtaraxis<CR>", "Toggle TrueZen Ataraxis" },
   },
   v = {
-    ["<leader>zn"] = { "<cmd>'<,'>TZNarrow<CR>", "Toggle TrueZen Narrow in visual mode" },
+    ["<leader>zn"] = {
+      "<cmd>'<,'>TZNarrow<CR>",
+      "Toggle TrueZen Narrow in visual mode",
+    },
   },
 }

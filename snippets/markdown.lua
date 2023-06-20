@@ -43,7 +43,10 @@ return {
       i(1)
     )
   ),
-  s({ trig = "mbs", dscr = "Math block short" }, { t "\\[ ", i(1), t { " \\]", "" } }),
+  s(
+    { trig = "mbs", dscr = "Math block short" },
+    { t "\\[ ", i(1), t { " \\]", "" } }
+  ),
 
   s(
     { trig = "note", dscr = "Python Markdown note block" },
