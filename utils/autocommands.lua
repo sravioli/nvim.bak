@@ -101,9 +101,6 @@ au("FileType", {
   desc = "Apply new doxygen syntax",
   pattern = { "c", "cpp", "doxygen" },
   callback = function()
-    vim.cmd [[set filetype=doxygen]]
-    vim.cmd [[set syntax=c.doxygen]]
-
     for _, doxygen in ipairs(doxygen_patterns) do
       local pattern, highlight = doxygen.pattern, doxygen.highlight
       vim.cmd(string.format("highlight link %s %s", pattern, highlight)) -- Define highlighting attributes
