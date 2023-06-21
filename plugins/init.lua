@@ -214,9 +214,9 @@ return {
   },
   {
     -- Multiple cursors plugin for vim/neovim.
-    "mg979/vim-visual-multi",
-    branch = "master",
-    event = "BufWinEnter",
+    -- "mg979/vim-visual-multi",
+    -- branch = "master",
+    -- event = "BufWinEnter",
   },
   {
     -- Invert text in vim, purely with lua.
