@@ -32,14 +32,15 @@ syntax match pcodeHeader         /^=\+$/
 syntax match pcodeConstants      /\v(%^[A-Z][A-Z ]*)@!<[A-Z][A-Z_]*>/
 syntax match pcodeNumbers        /\v(<\d+>|<[-+]\d+>)/
 syntax match pcodeFloats         /\v(<\d+\.\d*>|<[-+]\d+\.\d*>)/
-syntax match pcodeIncludePath    /\v"\.\/([^"]+\.[^"]+)"/ containedin=pcodeString
+syntax match pcodeIncludePath    /\v"(\.|\.\.)\/([^"]+\.[^"]+)"/ containedin=pcodeString
 syntax match pcodeHorizontalRule /^-\+$/
 syntax match pcodeFunctionCall   /\v<[a-z][a-z0-9_]*>(\((|.*)\))@=/
 syntax match pcodeInlineComment  #//.*$#
-syntax match pcodeString         /\w\@<!\(".*"\|'.*'\)/
-syntax match pcodeRegexString    /r".*"/
+syntax match pcodeString         /\v(\w)@<!"[^"]"/
+syntax match pcodeString         /\v(\w)@<!'[^']'/
+syntax match pcodeRegexString    /r"[^"]"/
 syntax match pcodeCharacter      /\w\@<!'\w'/
-syntax match pcodeEscapeSequence /\(\\\w\+\|\\\d\+\)/ containedin=pcodeString
+syntax match pcodeEscapeSequence /\v(\\\w+|\\\d+)/ containedin=pcodeString
 
 
 syn match pcodeRepeatsEnd
