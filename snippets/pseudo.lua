@@ -78,8 +78,8 @@ return {
     fmt(
       [[
       file := AprireFile({filename})
-      SE (file non esiste)
-        ALLORA esci
+      SE (file non esiste) ALLORA 
+        Uscire()
       FINE
       {}
       ChiudereFile(file)
@@ -298,7 +298,7 @@ return {
       - {}, {}, {};
 
       OUTPUT:
-      - nullo, non restituisce nulla.
+      - nullo, non restituisce nulla, vuoto.
 
       LAVORO:
       - {}, {}, {};
@@ -383,14 +383,14 @@ return {
   }),
 
   s({ trig = "noin", dscr = "INPUT block (void)" }, {
-    t { "INPUT:", "- nullo, non ha input." },
+    t { "INPUT:", "- nullo, non ha input, vuoto." },
   }),
   s({ trig = "noout", dscr = "OUTPUT block (void)" }, {
-    t { "OUTPUT:", "- nullo, non ha output." },
+    t { "OUTPUT:", "- nullo, non ha outpu, vuoto.." },
   }),
   s(
     { trig = "param", desc = "add a parameter the function description" },
-    fmt([[- {}, {}, {};]], {
+    fmt([[- {}, {}, {}]], {
       i(1, "name"),
       i(2, "description"),
       i(3, "type"),
@@ -466,7 +466,7 @@ return {
       ESEGUI
         {}
       FINCHÉ ({})
-      FINE FINCHÉ
+      FINE ESEGUI
       ]],
       { i(0), i(1, "condition") }
     )
