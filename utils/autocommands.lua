@@ -112,8 +112,8 @@ au("FileType", {
 -- Set filetype to "pseudo"
 au({ "BufNewFile", "BufRead" }, {
   desc = "Set custom filetype for `.pseudo` files",
-  pattern = "*.pseudo.txt",
-  command = "set filetype=pseudo.text | set syntax=pseudo.text",
+  pattern = "*.pseudo",
+  command = "set filetype=pseudo | set syntax=pseudo",
   group = aug.buf_detect,
 })
 
