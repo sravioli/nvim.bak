@@ -9,6 +9,8 @@ return {
     ["<C-d>"] = { "<C-d>zz" },
     ["n"] = { "nzzzv" },
     ["N"] = { "Nzzzv" },
+    ["]]"] = { "]]zz" },
+    ["[["] = { "[[zz" },
 
     -- open code actions kinda like VSCode
     ["<M-.>"] = { "<cmd>CodeActionMenu<CR>", "Open code actions" },
